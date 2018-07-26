@@ -1,7 +1,4 @@
-.vscode
-.DS_Store
-public
-build
-node_modules
-.firebaserc
-firebase.json
+build/
+node_modules/
+bower_components/
+package-lock.json
