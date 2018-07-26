@@ -1,188 +1,86 @@
-# Start Polymer 3.0 
+# Polymer App Toolbox - Starter Kit
 
-A simple Polymer 3.0 demo app. See it deployed at [start-polymer3.firebaseapp.com](https://start-polymer3.firebaseapp.com).
+[![Build Status](https://travis-ci.org/Polymer/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/Polymer/polymer-starter-kit)
 
-Please use the latest version of Chrome or Safari to view the app. It uses native [dynamic imports](https://developers.google.com/web/updates/2017/11/dynamic-import).
+This template is a starting point for building apps using a drawer-based
+layout. The layout is provided by `app-layout` elements.
 
-If you have done all this before:
+This template, along with the `polymer-cli` toolchain, also demonstrates use
+of the "PRPL pattern" This pattern allows fast first delivery and interaction with
+the content at the initial route requested by the user, along with fast subsequent
+navigation by pre-caching the remaining components required by the app and
+progressively loading them on-demand as the user navigates through the app.
 
-```
-npm install -g polymer-cli@next
-git clone https://github.com/PolymerLabs/start-polymer3.git
-cd start-polymer3
-npm install
-polymer serve
-```
+The PRPL pattern, in a nutshell:
 
-Otherwise: 
+* **Push** components required for the initial route
+* **Render** initial route ASAP
+* **Pre-cache** components for remaining routes
+* **Lazy-load** and progressively upgrade next routes on-demand
 
-  1.  [Set up a development environment for Polymer projects](#setup):
-        * [Install Polymer CLI prerequisites](#installprerequisites).
-        * [Install Polymer CLI](#installcli).
-  2.  [Clone, install and serve the `start-polymer3` project locally](#clone).
-  3.  (Optional) [Build the `start-polymer3` project for production](#build).
-  4.  (Optional) [Deploy the `start-polymer3` project](#deploy).
+### Setup
 
-<a name="setup"></a>
+##### Prerequisites
 
-## Set up a development environment for Polymer projects
+Install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
+[npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
 
-Before you can serve this project, you will need to install Polymer CLI
-and its prerequisites.
+    npm install -g polymer-cli@next
 
-If you've installed Polymer CLI before, please note that you will need the `@next` version to work with this project.
+##### Initialize project from template
 
-<a name="installprerequisites"></a>
+    mkdir my-app
+    cd my-app
+    polymer init polymer-3-starter-kit
 
-### Install Polymer CLI Prerequisites
+### Start the development server
 
-* [Git](https://git-scm.com/download/)
-* [Node.js](https://nodejs.org/en/)
-* [npm](https://www.npmjs.com/)
+This command serves the app at `http://127.0.0.1:8081` and provides basic URL
+routing for the app:
 
-<a name="installcli"></a>
+    npm start
 
-### Install Polymer CLI
+### Build
 
-When you've installed the prerequisites, run the following command to install the Polymer CLI globally:
+The `npm run build` command builds your Polymer application for production, using build configuration options provided by the command line or in your project's `polymer.json` file.
 
-```
-npm install -g polymer-cli@next
-```
+You can configure your `polymer.json` file to create multiple builds. This is necessary if you will be serving different builds optimized for different browsers. You can define your own named builds, or use presets. See the documentation on [building your project for production](https://www.polymer-project.org/3.0/toolbox/build-for-production) for more information.
 
-<a name="clone"></a>
-
-## Clone, install and serve the start-polymer3 project locally
-
-To clone the project, install its dependencies, and serve locally:
+The Polymer Starter Kit is configured to create three builds. These builds will be output to a subdirectory under the `build/` directory as follows:
 
 ```
-git clone https://github.com/PolymerLabs/start-polymer3.git
-cd start-polymer3
-npm install
-polymer serve
+build/
+  es5-bundled/
+  es6-bundled/
+  esm-bundled/
 ```
 
-To view the app, open the `applications` link in the latest version of Chrome or Safari. For example:
+* `es5-bundled` is a bundled, minified build with a service worker. ES6 code is compiled to ES5 for compatibility with older browsers.
+* `es6-bundled` is a bundled, minified build with a service worker. ES6 code is served as-is. This build is for browsers that can handle ES6 code - see [building your project for production](https://www.polymer-project.org/3.0/toolbox/build-for-production#compiling) for a list.
+* `esm-bundled` is a bundled, minified build with a service worker. It uses standard ES module import/export statements for browsers that support them.
 
-```
-~/start-polymer3 > polymer serve
-info:    Files in this directory are available under the following URLs
-      applications: http://127.0.0.1:8081
-      reusable components: http://127.0.0.1:8081/components/start-polymer3/
-```
+Run `polymer help build` for the full list of available options and optimizations. Also, see the documentation on the [polymer.json specification](https://www.polymer-project.org/3.0/docs/tools/polymer-json) and [building your Polymer application for production](https://www.polymer-project.org/3.0/toolbox/build-for-production).
 
-In the example above, you'd open http://127.0.0.1:8081.
+### Preview the build
 
-<a name="build"></a>
+This command serves your app. Replace `build-folder-name` with the folder name of the build you want to serve.
 
-## Build the start-polymer3 project for production
+    npm start build/build-folder-name/
 
-TODO: Finish this section.
+### Run tests
 
-To build the `start-polymer3` app: 
+This command will run [Web Component Tester](https://github.com/Polymer/web-component-tester)
+against the browsers currently installed on your machine:
 
-```
-npm install
-polymer build
-```
+    npm test
 
-The build is output to `build/es6-unbundled`. To serve the built app locally:
+If running Windows you will need to set the following environment variables:
 
-```
-cd build/es6-unbundled
-polymer serve
-```
+- LAUNCHPAD_BROWSERS
+- LAUNCHPAD_CHROME
 
-<a name="deploy"></a>
+Read More here [daffl/launchpad](https://github.com/daffl/launchpad#environment-variables-impacting-local-browsers-detection)
 
-## Deploy the start-polymer3 project
+---
 
-TODO: Finish this section.
-
-You can deploy a built Polymer app to any web server. Suggestions are:
-
-* [Deploy with Firebase](#firebase).
-* TODO: Deploy with Google App Engine.
-
-<a name="firebase"></a>
-
-### Deploy with Firebase
-
-To deploy the app to your own Firebase project:
-
-1.  [Install the Firebase CLI tools](https://firebase.google.com/docs/cli/).
-
-    ```
-    npm install -g firebase-tools
-    firebase login
-    ```
-
-2.  From the [Firebase console](https://console.firebase.google.com/), create a Firebase project.
-
-3.  [Initialize Firebase in your project folder](https://firebase.google.com/docs/cli/#initializing_a_project_directory). 
-
-    ```
-    firebase init
-    ```
-
-    Complete the Firebase initialization process to set up your project for hosting. 
-
-    If you are prompted to
-
-    * **select Firebase CLI features**, select **Hosting**.
-    * **select a default Firebase project**, select the project you created from the Firebase console.
-    * **specify a `public` directory**, you can enter `build/es6-unbundled` to deploy the build configuration supplied with this sample project.
-    * **configure as a single-page app**, enter `Y`. 
-    * **overwrite `index.html`**, enter `N`.
-
-4.  In a text editor, open `firebase.json` from your root project folder.
-
-    `hosting.ignore` is a list of files and folders that Firebase will not deploy. Remove the `node_modules` folder from this list and save `firebase.json`.
-
-    **firebase.json: Before**
-
-    ```
-    {
-        "hosting": {
-            "public": "build/es6-unbundled",    
-            "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/node_modules/**"
-            ],
-            "rewrites": [
-            {
-                "source": "**",
-                "destination": "/index.html"
-            }
-            ]
-        }
-    }
-    ```
-
-    **firebase.json: After**
-
-    ```
-    {
-        "hosting": {
-            "public": "build/es6-unbundled",
-            "ignore": [
-            "firebase.json",
-            "**/.*"
-            ],
-            "rewrites": [
-            {
-                "source": "**",
-                "destination": "/index.html"
-            }
-            ]
-        }
-    }
-    ```
-
-4.  [Deploy your project](https://firebase.google.com/docs/cli/#deployment) with Firebase.
-
-    ```
-    firebase deploy
-    ```
+Looking for our older PSK2 Polycast or migration blog post? See [the previous README](https://github.com/Polymer/polymer-starter-kit/blob/v3.2.1/README.md).
